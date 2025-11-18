@@ -1,21 +1,7 @@
 #!/bin/bash
 
-# Initialize arrays to hold arguments
-JVM_ARGS=""
-APP_ARGS=""
-
-# Loop through all arguments passed to the container
-for arg in "$@"; do
-    if [[ "$arg" == -X* ]]; then
-        # Argument starts with -X (e.g., -Xmx16g, -Xms512m) -> JVM argument
-        JVM_ARGS="$JVM_ARGS $arg"
-    else
-        # All other arguments (e.g., dump, observed, NONE) -> Application argument
-        APP_ARGS="$APP_ARGS $arg"
-    fi
-done
+APP_ARGS=$*
 
 # Execute Java with arguments in the correct order
 # The 'exec' command replaces the current shell process, improving resource usage.
-export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib"
-exec java -Djava.awt.headless=true -Ddevelopment=false $JVM_ARGS -jar /app/juicer_tools_jar/juicer_tools.jar $APP_ARGS
+exec java -Djava.awt.headless=true -Ddevelopment=false -jar /app/juicer_tools.jar $APP_ARGS

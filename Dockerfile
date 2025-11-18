@@ -96,11 +96,9 @@ RUN set -eux; \
 
 WORKDIR /app
 
-COPY --from=build-env /opt/juicebox/Juicebox-${JUICEBOX_VERSION}/lib/artifacts/* /app
+COPY --from=build-env /opt/juicebox/Juicebox-${JUICEBOX_VERSION}/out/artifacts/* /app
 
 ENV PATH=/app/Juicebox_jar:/app/juicer_tools_jar:$PATH
 
 COPY juicer_tools /usr/local/bin/
 RUN chmod +x /usr/local/bin/juicer_tools
-
-CMD ["juicer_tools", "-h"]
